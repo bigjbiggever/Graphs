@@ -1,6 +1,7 @@
 package com.example.routes;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Graph {
     private int[][] distanceMatrix;
@@ -106,81 +107,115 @@ public class Graph {
         return minIdx;
     }
 
-    public List<Path> clarkAndWright(int depot) {
+    public List<Path> clarkeAndWright(int depot) {
         List<Path> routes = new ArrayList<>();
         // Connect every station to the depot directly
         Path currPath;
-        Path maxSavings;
+        Path maxSavingsPath = null;
+        int maxSaved = 0;
         for (int i = 0; i < distanceMatrix.length; i++) {
-            ArrayList<Integer> currLine = new ArrayList<>();
-            currLine.add(depot);
-            currLine.add(i);
-            routes.add(new Path(currLine, getDistance(depot, i)));
+            if (i != depot && getDistance(depot, i) < Integer.MAX_VALUE) {
+                Path path;
+                ArrayList<StationsPair> currLine = new ArrayList<>();
+                currLine.add(new StationsPair(depot, i, getDistance(depot, i)));
+
+                path = new Path(currLine);
+                routes.add(path);
+                System.out.println("path" + i + ": " + path.toString());
+            }
         }
         // Create every pair and find the ones with the highest savings
 
         for (int i = 0; i < routes.size(); i++) {
-            int removedPath = 0;
-            maxSavings = calcSavings(routes, i, 0, depot);
-            for (int j = 0; j < routes.size(); j++) {
-                currPath = calcSavings(routes, i, j, depot);
-                if (currPath != null && maxSavings != null && currPath.getLength() < maxSavings.getLength()) {
-                    maxSavings = currPath;
-                    removedPath = j;
+            int firstPathIndex = i;
+            int secondPathIndex = i;
+            maxSavingsPath = null;
+            maxSaved = 0;
+
+            for (int j = 0; routes.get(i) != null && j < routes.size(); j++) {
+                if (i != j && routes.get(j) != null) {
+                    currPath = calcSavings(routes, i, j, depot);
+                    if (currPath != null) {
+                        int saved = (routes.get(i).getLength() + routes.get(j).getLength()) - currPath.getLength();
+                        if (maxSavingsPath == null && saved > 0 || saved > maxSaved) {
+                            System.out.println("current Path: " + currPath + " saved: " + saved);
+                            maxSavingsPath = currPath;
+                            maxSaved = saved;
+                            secondPathIndex = j;
+                        }
+                    }
                 }
             }
-            if(maxSavings != null) routes.remove(removedPath);
+            if(maxSavingsPath != null) {
+                System.out.println("max saving" + maxSavingsPath + " saved " + maxSaved);
+                routes.set(firstPathIndex, maxSavingsPath);
+                //routes.remove(secondPathIndex);
+                routes.set(secondPathIndex, null);
+            }
         }
 
-        return routes;
+        return (List<Path>) routes.stream().filter((Path path) -> path != null).collect(Collectors.toList());
     }
 
-    //TODO: Bug is here, doesn't change the path to a better one, also fix the -1 return
     public Path calcSavings(List<Path> routes, int route1, int route2, int depot) {
-        // Skip the depot
         Path retPath;
+        Path path1 = routes.get(route1);
+        Path path2 = routes.get(route2);
+        StationsPair end1 = path1.getLastHop();
+        StationsPair end2 = path2.getLastHop();
 
-//        for (int i = 0; i < routes.size(); i++) {
-//            for (int j = 0; j < routes.get(i).getPath().size(); j++) {
-//                System.out.print(routes.get(i).get(j) + " ");
-//            }
-//            System.out.println();
-//        }
+        StationsPair start1 = path1.getFirstHop();
+        StationsPair start2 = path2.getFirstHop();
 
-        int end1 = routes.get(route1).get(routes.get(route1).getPath().size() - 1);
-        int end2 = routes.get(route2).get(routes.get(route2).getPath().size() - 1);
+        int terminalStation1 = end1.getStationB() == depot ? end1.getStationA() : end1.getStationB();
+        int terminalStation2 = end2.getStationB() == depot ? end2.getStationA() : end2.getStationB();
+        int firstStation1 = start1.getStationB() == depot ? start1.getStationA() : start1.getStationB();
+        int firstStation2 = start2.getStationB() == depot ? start2.getStationA() : start2.getStationB();
 
-        int start1 = routes.get(route1).get(1);
-        int start2 = routes.get(route2).get(1);
+        int distanceBetweenEnds = getDistance(terminalStation1, terminalStation2);
+        // get distance from the first non-depot station to the end of the next route
+        int distanceBetweenStart1AndEnd2 = getDistance(firstStation1, terminalStation2);
+        int distanceBetweenStart2AndEnd1 = getDistance(firstStation2, terminalStation1);
+
+        int maxDistanceFromDepot = Math.max(start1.getDistance(), start2.getDistance());
+        int shortestDistanceBetweenPaths = Math.min(Math.min(distanceBetweenEnds, distanceBetweenStart1AndEnd2), distanceBetweenStart2AndEnd1);
 
         // If connecting the lines isn't shorter, return null
-        if (getDistance(end1, end2) > Math.min(getDistance(depot, routes.get(route1).getPath().get(1)), getDistance(depot, routes.get(route2).getPath().get(1)))) {
+        if (shortestDistanceBetweenPaths >= maxDistanceFromDepot) {
             return null;
         }
 
-        System.out.println("end1: " + end1 + " end2: " + end2 + " distance: " + getDistance(end1, end2));
-        System.out.println(Math.max(getDistance(depot, routes.get(route1).getPath().get(1)), getDistance(depot, routes.get(route2).getPath().get(1))));
+        System.out.println("\n" + end1.getStationB() + "->" + end2.getStationB() + " distance: " + distanceBetweenEnds);
+        System.out.println(end1.getStationB() + "->" + start2.getStationB() + " distance: " + distanceBetweenStart2AndEnd1);
+        System.out.println(end2.getStationB() + "-> " + start1.getStationB() + " distance: " + distanceBetweenStart1AndEnd2);
 
         // If the routes connection starts from route1
-        if (getDistance(depot, routes.get(route1).getPath().get(1)) < getDistance(depot, routes.get(route2).getPath().get(1))) {
-            retPath = new Path(routes.get(route1));
-            if (routes.get(route2).getPath().size() > 1)
-                routes.get(route2).getPath().remove(0);
-            retPath.connectLines(routes.get(route2));
-            routes.get(route2).getPath().add(0, depot);
-        }
-        else {
-            retPath = new Path(routes.get(route2));
-            if (routes.get(route1).getPath().size() > 1)
-                routes.get(route1).getPath().remove(0);
-            retPath.connectLines(routes.get(route2));
-            routes.get(route1).getPath().add(0, depot);
+
+        if (distanceBetweenEnds <= Math.min(distanceBetweenStart2AndEnd1, distanceBetweenStart1AndEnd2)) {
+             // connecting the ends is the shortest path
+            Path firstPath, secondPath;
+            if (start1.getDistance() <= start2.getDistance()) {
+                firstPath = path1;
+                secondPath = path2;
+            } else {
+                firstPath = path2;
+                secondPath = path1;
+            }
+             retPath = new Path(firstPath);
+             retPath.connectLines(secondPath.reverse(), distanceBetweenEnds, depot);
+            System.out.println("end->end");
+        } else if (distanceBetweenStart2AndEnd1 < distanceBetweenStart1AndEnd2) {
+            // start with path 1 and connect path 2 without depot
+            retPath = new Path(path1);
+            retPath.connectLines(path2, distanceBetweenStart2AndEnd1, depot);
+            System.out.println("end1->start2 p1:" + path1 + "p2: " + path2);
+        } else {
+            // start with path 2 and connect path 1 without depot
+            retPath = new Path(path2);
+            retPath.connectLines(path1, distanceBetweenStart1AndEnd2, depot);
+            System.out.println("end2->start1 p1:" + path1 + "p2: " + path2);
         }
 
-//        for (int i = 0; i < retPath.getPath().size(); i++) {
-//            System.out.print(retPath.get(i) + " ");
-//        }
-//        System.out.println();
         return retPath;
     }
 

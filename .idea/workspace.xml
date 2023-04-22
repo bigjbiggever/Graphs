@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c385d546-bb04-4ab5-a8fc-e1a917db3889" name="Changes" comment="" />
+    <list default="true" id="c385d546-bb04-4ab5-a8fc-e1a917db3889" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/StationsPair.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/Graph.java" beforeDir="false" afterPath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/Graph.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/Path.java" beforeDir="false" afterPath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/Path.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/RoutesPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/RoutesPresenter.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -29,6 +36,7 @@
     <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="2MaiH1zOWmJiajVmJqpU3kYY5AV" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -42,10 +50,13 @@
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.38045976&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.javacompiler&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propDebugger&quot;
   }
 }</component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.example.routes" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\jorda\IdeaProjects\Graphs" />
     </key>
@@ -88,8 +99,13 @@
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/Graph.java</url>
-          <line>156</line>
+          <line>183</line>
           <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/Graph.java</url>
+          <line>211</line>
+          <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

@@ -1,55 +1,81 @@
 package com.example.routes;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Path {
-    private ArrayList <Integer> path;
+    private ArrayList <StationsPair> path;
     private int length;
 
-    public Path(ArrayList<Integer> path, int length) {
-        this.path = (ArrayList<Integer>) path.clone();
-        this.length = length;
+    public Path(ArrayList<StationsPair> path) {
+        this.path = (ArrayList<StationsPair>) path.clone();
+        this.length = this.path.stream().mapToInt((StationsPair pair) -> pair.getDistance()).sum();
     }
 
     public Path(Path original) {
-        this.path = (ArrayList<Integer>) original.getPath().clone();
+        this.path = (ArrayList<StationsPair>) original.getPath().clone();
+        for (int i = 0; i < this.path.size(); i++) {
+            this.path.set(i, new StationsPair(this.path.get(i)));
+        }
         this.length = original.getLength();
     }
 
     // Connect the second path to the end of this path
-    public void connectLines (Path second) {
-        this.path.addAll(second.getPath());
-        this.length += second.getLength();
+    public void connectLines (Path second, int distance, int depot) {
+        ArrayList<StationsPair> secondPathList = second.getPath();
+        StationsPair lastHop = this.getLastHop();
+        StationsPair firstHop = second.getFirstHop();
+        int startStation = firstHop.getStationB() == depot ? firstHop.getStationA() : firstHop.getStationB();
+        secondPathList.set(0, new StationsPair(lastHop.getStationB(), startStation, distance));
+
+        this.path.addAll(secondPathList);
+        this.length += second.getLength() - firstHop.getDistance() + distance;
     }
 
-    public ArrayList<Integer> getPath() {
-        return path;
-    }
-
-    public void setPath(ArrayList<Integer> path) {
-        this.path = path;
-    }
-
-    public void addLength (int length) {
-        this.length += length;
+    public ArrayList<StationsPair> getPath() {
+        return (ArrayList<StationsPair>) path.clone();
     }
 
     public int getLength() {
         return length;
     }
 
-    public void setLength(int length) {
-        this.length = length;
-    }
-
-    public int get(int index) {
+    public StationsPair get(int index) {
         if (this.path.size() > index && index >= 0)
             return this.path.get(index);
-        System.out.println("\n index: " + index + " path size: " + this.path.size());
-        return -1;
+        return null;
     }
 
-    public void set(int index,  int value) {
+    public void set(int index,  StationsPair value) {
         this.path.set(index, value);
+    }
+
+    public StationsPair getLastHop() {
+        return this.path.get(this.path.size() - 1);
+    }
+
+    public StationsPair getFirstHop() {
+        return this.path.get(0);
+    }
+
+    public Path reverse() {
+        Path reversed = new Path(this);
+        Collections.reverse(reversed.path);
+        for (StationsPair stationsPair : reversed.path) {
+            stationsPair.reverse();
+        }
+
+        return reversed;
+    }
+
+    @Override
+    public String toString() {
+        String str = "";
+        for (StationsPair stationsPair : this.path) {
+            if (str.length() > 0) str += "->";
+            str += stationsPair.toString();
+        }
+
+        return str + "(" + this.length + ")";
     }
 }
