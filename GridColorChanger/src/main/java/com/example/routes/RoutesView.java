@@ -10,13 +10,12 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class RoutesView implements IRoutesView {
 
     private IRoutesPresenter presenter;
-    private List<List<int[]>> routes;
+    private List<Path> routes;
 
     public RoutesView() {}
 
@@ -26,7 +25,26 @@ public class RoutesView implements IRoutesView {
     }
 
 
+    private void drawStationCircle(Group group, int offsetX, int offsetY, int x, Color color, String text) {
+        final int RADIUS = 8;
+
+        Circle station = new Circle();
+        station.setCenterX(offsetX + x);
+        station.setFill(color);
+        station.setStroke(Color.BLACK);
+        station.setCenterY(offsetY);
+        station.setRadius(RADIUS);
+        group.getChildren().add(station);
+        Text label = new Text(text);
+        label.setX(offsetX - (1 + text.length() * 2) + x);
+        label.setY(24);
+        label.setStroke(Color.WHITE);
+        group.getChildren().add(label);
+    }
+
     public void show(Stage routesStage) {
+        int k = 0; // color selector
+
         routesStage.setTitle("Routes Map");
         FlowPane rootNode = new FlowPane();
 
@@ -39,38 +57,42 @@ public class RoutesView implements IRoutesView {
         routesStage.setScene(routesScene);
 
         Color[] colors = {Color.GREEN, Color.BLUE, Color.GRAY, Color.RED, Color.ORANGE};
-        for (int k = 0; k < routes.size(); k++) {
-            List<int[]> path = routes.get(k);
-            int[] route = path.stream().mapToInt(pair -> pair[0]).toArray();
-            int[] distances = path.stream().mapToInt(pair -> pair[1]).toArray();
+        for (Path path : routes) {
+            int[] route = path.toStationsList();
+//            int[] distances = path.stream().mapToInt(pair -> pair[1]).toArray();
 
-            float routeDistance = Arrays.stream(distances).sum();
+            float routeDistance =path.getLength();
             // each route is a Group
             Group group = new Group();
 
             float distance = 0;
             int offset = 0;
             int offsetY = 20;
-            int radius = 8;
+            int segmentStartX = 0;
+
+            Color color = colors[++k % colors.length];
             Line line = new Line(offset, offsetY, 360 + offset, offsetY);
-            line.setStroke(colors[k % colors.length]);
+            line.setStroke(color);
             group.getChildren().add(line);
-            for (int i = 0; i < route.length; i++) {
-                distance += distances[i];
+
+            // draw depot station
+            drawStationCircle(group, offset, offsetY, 0, color, path.getFirstHop().getStationA() + "");
+
+            for (int i = 0; i < path.getNumberOfStops(); i++) {
+                StationsPair pair = path.get(i);
+                distance += pair.getDistance();
                 int x = (int) Math.round(distance / routeDistance * 360.0);
 
-                Circle station = new Circle();
-                station.setCenterX(offset + x);
-                station.setFill(colors[k]);
-                station.setStroke(Color.BLACK);
-                station.setCenterY(offsetY);
-                station.setRadius(radius);
-                group.getChildren().add(station);
-                Text label = new Text(route[i] + "");
-                label.setX(offset - 4 + x);
-                label.setY(24);
-                label.setStroke(Color.WHITE);
+                // add distance label
+                Text label = new Text(pair.getDistance() + "");
+                System.out.println(k + ":: " + i + ": placing label at " + segmentStartX + " " + x + " middle " + (segmentStartX +  (x - segmentStartX) / 2));
+                label.setX(offset + segmentStartX +  (x - segmentStartX) / 2 - 10);
+                label.setY(18);
+                label.setStroke(Color.BLACK);
                 group.getChildren().add(label);
+
+                drawStationCircle(group, offset, offsetY, x, color, pair.getStationB() + "");
+                segmentStartX = x;
             }
             rootNode.getChildren().add(group);
         }
@@ -84,7 +106,7 @@ public class RoutesView implements IRoutesView {
     }
 
     @Override
-    public void setRoutes(List<List<int[]>> routes) {
+    public void setRoutes(List<Path> routes) {
         this.routes = routes;
     }
 }

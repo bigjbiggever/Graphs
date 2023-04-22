@@ -14,6 +14,10 @@ public class Graph {
         this.distanceMatrix = distanceMatrix;
     }
 
+    public Graph(Graph g) {
+        this.distanceMatrix = g.getDistanceMatrix();
+    }
+
     public void addNode() {
         int[][] temp = new int[distanceMatrix.length + 1][distanceMatrix[0].length + 1];
     }
@@ -185,9 +189,9 @@ public class Graph {
             return null;
         }
 
-        System.out.println("\n" + end1.getStationB() + "->" + end2.getStationB() + " distance: " + distanceBetweenEnds);
-        System.out.println(end1.getStationB() + "->" + start2.getStationB() + " distance: " + distanceBetweenStart2AndEnd1);
-        System.out.println(end2.getStationB() + "-> " + start1.getStationB() + " distance: " + distanceBetweenStart1AndEnd2);
+//        System.out.println("\n" + end1.getStationB() + "->" + end2.getStationB() + " distance: " + distanceBetweenEnds);
+//        System.out.println(end1.getStationB() + "->" + start2.getStationB() + " distance: " + distanceBetweenStart2AndEnd1);
+//        System.out.println(end2.getStationB() + "-> " + start1.getStationB() + " distance: " + distanceBetweenStart1AndEnd2);
 
         // If the routes connection starts from route1
 

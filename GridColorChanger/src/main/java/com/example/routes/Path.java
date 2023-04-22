@@ -2,6 +2,7 @@ package com.example.routes;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 
 public class Path {
     private ArrayList <StationsPair> path;
@@ -77,5 +78,30 @@ public class Path {
         }
 
         return str + "(" + this.length + ")";
+    }
+
+    public int[] toArray() {
+        int[] retArr = new int[this.path.size() + 1];
+        for (int i = 0; i < this.path.size(); i++) {
+            retArr[i] = this.path.get(i).getStationA();
+        }
+        retArr[retArr.length - 1] = this.path.get(this.path.size()-1).getStationB();
+        return retArr;
+    }
+
+    public int[] toStationsList() {
+        int [] stations = new int[this.path.size() + 1];
+        Iterator<Integer> iterator = this.path.stream().mapToInt(pair -> pair.getStationB()).iterator();
+        stations[0] = this.path.get(0).getStationA();
+        for (int i = 1; iterator.hasNext(); i++) {
+            int station = iterator.next();
+            stations[i] = station;
+        }
+
+        return stations;
+    }
+
+    public int getNumberOfStops() {
+        return this.path.size();
     }
 }

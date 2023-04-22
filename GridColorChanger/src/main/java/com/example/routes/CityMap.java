@@ -27,7 +27,7 @@ public class CityMap {
     }
 
     public Graph getDistances() {
-        return distances;
+        return new Graph(distances);
     }
 
     public void findStations() {

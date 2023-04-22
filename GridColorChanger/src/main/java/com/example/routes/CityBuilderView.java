@@ -101,7 +101,7 @@ public class CityBuilderView implements ICityBuilderView {
                     int c = n % COLS;
                     CellType choice = choiceBox.getValue();
                     cells[r][c].setFill(choice.getColor());
-                    presenter.updateMap(0, 0, choice.toInt());
+                    presenter.updateMap(r, c, choice.toInt());
                 });
             }
         }

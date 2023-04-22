@@ -5,12 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c385d546-bb04-4ab5-a8fc-e1a917db3889" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/StationsPair.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/CityBuilderView.java" beforeDir="false" afterPath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/CityBuilderView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/CityMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/CityMap.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/Graph.java" beforeDir="false" afterPath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/Graph.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/IRoutesView.java" beforeDir="false" afterPath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/IRoutesView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/Path.java" beforeDir="false" afterPath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/Path.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/RoutesPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/RoutesPresenter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/RoutesView.java" beforeDir="false" afterPath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/RoutesView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,18 +43,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;12&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/jorda/IdeaProjects/Graphs&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.38045976&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propDebugger&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "OverrideImplement.generate.javadoc": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "jdk.selected.JAVA_MODULE": "12",
+    "last_opened_file_path": "C:/Users/jorda/IdeaProjects/Graphs",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.38045976",
+    "settings.editor.selected.configurable": "project.propDebugger"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.example.routes" />
@@ -99,12 +102,12 @@
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/Graph.java</url>
-          <line>183</line>
+          <line>187</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/Graph.java</url>
-          <line>211</line>
+          <line>215</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>

@@ -51,6 +51,10 @@ public class RoutesPresenter extends Application implements ICityBuilderPresente
             next.add(new int[] {cityMap.getStations().get(i).getX(), cityMap.getStations().get(i).getY()});
         }
 
+        System.out.println("after find stations");
+        cityMap.getDistances().printDistances();
+        System.out.println();
+
         cityBuilderView.numberStations(next);
 
         int dist = 1;
@@ -66,8 +70,13 @@ public class RoutesPresenter extends Application implements ICityBuilderPresente
         } while (next.size() > 0);
 
         Graph cityMapGraph = cityMap.getDistances();
+
+
+        cityMap.getDistances().printDistances();
+        System.out.println();
+
         Graph allPathsGraph = cityMapGraph.floydWarshall();
-        List<List<Integer>> routes = m.genRoutes(cityMap, allPathsGraph, Constants.LINES);
+        //List<List<Integer>> routes = m.genRoutes(cityMap, allPathsGraph, Constants.LINES);
 
 //        List<List<int[]>> routesAndDistance = new ArrayList<>(routes.size());
 //        for (int i = 0; i < routes.size(); i++) {
@@ -85,13 +94,14 @@ public class RoutesPresenter extends Application implements ICityBuilderPresente
 //            System.out.print("Line " + (i+1) + ": ");
 //            System.out.println(routes.get(i));
 //        }
-        allPathsGraph.printDistances();;
+        // allPathsGraph.printDistances();;
         List<Path> lines = allPathsGraph.clarkeAndWright(allPathsGraph.findMinNode());
         for(int i = 0; i < lines.size(); i++) {
             System.out.println("line " + i + ": " + lines.get(i));
         }
 
-        //routesView.setRoutes(routesAndDistance);
-        //routesView.show(new Stage());
+
+        routesView.setRoutes(lines);
+        routesView.show(new Stage());
     }
 }

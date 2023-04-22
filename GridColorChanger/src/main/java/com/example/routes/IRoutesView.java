@@ -7,5 +7,5 @@ import java.util.List;
 public interface IRoutesView {
     void show(Stage stage);
 
-    void setRoutes(List<List<int[]>> routes);
+    void setRoutes(List<Path> routes);
 }
