@@ -14,17 +14,30 @@ import java.util.List;
 
 public class RoutesView implements IRoutesView {
 
-    private IRoutesPresenter presenter;
     private List<Path> routes;
 
+    /***
+     * RoutesView empty generator
+     */
     public RoutesView() {}
 
+    /***
+     * RoutesView generator
+     * @param presenter
+     */
     public RoutesView(IRoutesPresenter presenter) {
         super();
-        this.presenter = presenter;
     }
 
-
+    /***
+     * Draw bus lines
+     * @param group
+     * @param offsetX
+     * @param offsetY
+     * @param x
+     * @param color
+     * @param text
+     */
     private void drawStationCircle(Group group, int offsetX, int offsetY, int x, Color color, String text) {
         final int RADIUS = 8;
 
@@ -42,6 +55,10 @@ public class RoutesView implements IRoutesView {
         group.getChildren().add(label);
     }
 
+    /***
+     * Show routes
+     * @param routesStage
+     */
     public void show(Stage routesStage) {
         int k = 0; // color selector
 
@@ -58,8 +75,6 @@ public class RoutesView implements IRoutesView {
 
         Color[] colors = {Color.GREEN, Color.BLUE, Color.GRAY, Color.RED, Color.ORANGE};
         for (Path path : routes) {
-            int[] route = path.toStationsList();
-//            int[] distances = path.stream().mapToInt(pair -> pair[1]).toArray();
 
             float routeDistance =path.getLength();
             // each route is a Group
@@ -85,7 +100,6 @@ public class RoutesView implements IRoutesView {
 
                 // add distance label
                 Text label = new Text(pair.getDistance() + "");
-                System.out.println(k + ":: " + i + ": placing label at " + segmentStartX + " " + x + " middle " + (segmentStartX +  (x - segmentStartX) / 2));
                 label.setX(offset + segmentStartX +  (x - segmentStartX) / 2 - 10);
                 label.setY(18);
                 label.setStroke(Color.BLACK);
@@ -97,14 +111,14 @@ public class RoutesView implements IRoutesView {
             rootNode.getChildren().add(group);
         }
 
-
-        // Add the canvas and button to the scene graph.
-        // rootNode.getChildren().addAll(canvas);
-
         // Show the stage and its scene.
         routesStage.show();
     }
 
+    /***
+     * Routes Setter
+     * @param routes
+     */
     @Override
     public void setRoutes(List<Path> routes) {
         this.routes = routes;

@@ -5,7 +5,18 @@ import java.util.List;
 
 public class RoutesModel {
 
-    // Brute Force solution
+    /**
+     * Returns a List of routes where each value in the inner Lists
+     * is a station ID. The lines are round trip, so that they always
+     * start and end at the depot.
+     * <p>
+     * This function run an exhaustive search algorithm so it's time
+     * complexity is O(n!).
+     * @param  c        cityMap object where we want to find routes
+     * @param  g        graph of stations
+     * @param  numLines number of lines to generate
+     * @return          optimized bus routes
+     */
     public List<List<Integer>> genRoutes(CityMap c, Graph g, int numLines) {
         int depot = g.findMinNode();
         List<Integer> stations = new ArrayList<>();
@@ -43,8 +54,13 @@ public class RoutesModel {
         return bestRoutes;
     }
 
-    // Recursive algorithm that returns all permutations of a list of Integers
-    // O(n!) where n = list.size()
+    /**
+     * This function returns all permutations of a given list.
+     * <p>
+     * The time complexity of this algorithm is O(n!).
+     * @param  list
+     * @return all the list's permutations
+     */
     public List<List<Integer>> permutations(List<Integer> list) {
         List<List<Integer>> ret = new ArrayList<>();
         if (list.size() == 1) ret.add(list);

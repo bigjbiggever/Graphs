@@ -11,6 +11,10 @@ public class CityMap {
     private Graph distances;
     private Cell[][] city;
 
+    /***
+     * CityMap generator
+     * @param city the city's map
+     */
     public CityMap(int[][] city) {
         this.city = new Cell[city.length][city[0].length];
         for (int i = 0; i < city.length; i++) {
@@ -19,17 +23,36 @@ public class CityMap {
             }
         }
     }
+
+    /***
+     * Cell getter
+     * @param x cell's x
+     * @param y cell's y
+     * @return the cell
+     */
     public Cell getCell (int x, int y) {
         return this.city[y][x];
     }
+
+    /***
+     * Station array getter
+     * @return the station array
+     */
     public ArrayList<Station> getStations() {
         return this.stations;
     }
 
+    /***
+     * Graph getter
+     * @return the Graph which represents the city
+     */
     public Graph getDistances() {
         return new Graph(distances);
     }
 
+    /***
+     * Finds the stations in the city map and add them to the station array
+     */
     public void findStations() {
         this.stations = new ArrayList<>();
         int cnt = 0;
@@ -47,8 +70,15 @@ public class CityMap {
         this.distances.init();
     }
 
+    /***
+     * Adds the next moves to a given Arraylist
+     * @param s source station
+     * @param x current x coordinate
+     * @param y current y coordinate
+     * @param distance distance from source
+     * @param next ArrayList holding the next moves
+     */
     public void nextMove(Station s, int x, int y, int distance, ArrayList<int[]> next) {
-        //if(isIsolated(x,y)) return;
         for (int i = 0; i < rowT.length; i++) {
             if (!(x + colT[i] < 0 || x + colT[i] >= BOARD_SIZE) && !(y + rowT[i] < 0 || y + rowT[i] >= BOARD_SIZE)) {
                 Cell cell =  this.city[y + rowT[i]][x + colT[i]];
@@ -78,12 +108,19 @@ public class CityMap {
     }
 
 
-
+    /***
+     * Checks if a given coordinate is valid
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @return boolean if it is valid or not
+     */
     public boolean isValid(int x, int y) {
         return this.city[y][x].isRoad() && this.city[y][x].isPristine();
     }
 
-
+    /***
+     * Prints the map
+     */
     public void printMap() {
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
@@ -102,6 +139,12 @@ public class CityMap {
         }
     }
 
+    /***
+     * Cell setter
+     * @param value cell's value
+     * @param x cell's x coordinate
+     * @param y cell's y coordinate
+     */
     public void setCell(int value, int x, int y) {
         city[y][x].setType(value);
     }

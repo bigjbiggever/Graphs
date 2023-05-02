@@ -10,12 +10,19 @@ public class RoutesPresenter extends Application implements ICityBuilderPresente
     private CityMap cityMap;
     private CityBuilderView cityBuilderView;
 
+    /**
+     * Main, starts the application
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * Starts the program, using the Application class
+     * @param  stage the GUI stage
+     */
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         int[][] city = {
                 {1, 2, 0, 0, 0, 0, 0, 1, 2, 0},
                 {0, 0, 1, 1, 0, 0, 0, 1, 0, 0},
@@ -34,31 +41,44 @@ public class RoutesPresenter extends Application implements ICityBuilderPresente
         cityBuilderView.show();
     }
 
+    /**
+     * Changes the value of a cell
+     * <p>
+     * complexity is O(1).
+     * @param  row      the row of the value
+     * @param  col      the column of the value
+     * @param  value    the value
+     */
     @Override
     public void updateMap(int row, int col, int value) {
         this.cityMap.setCell(value, col, row);
     }
 
+    /**
+     * Finds ideal routes between the stations
+     * <p>
+     * This function does everything from the user input until
+     * the bus routes.
+     * complexity is O(n^3).
+     */
     @Override
     public void findRoutes() {
-        RoutesModel m = new RoutesModel();
         ArrayList<int[]> next = new ArrayList<>();
         IRoutesView routesView = new RoutesView(this);
 
         cityMap.findStations();
 
+        // Create a line for each station
         for (int i = 0; i < cityMap.getStations().size(); i++) {
             next.add(new int[] {cityMap.getStations().get(i).getX(), cityMap.getStations().get(i).getY()});
         }
 
-        System.out.println("after find stations");
-        cityMap.getDistances().printDistances();
-        System.out.println();
-
+        // Number the stations in the view
         cityBuilderView.numberStations(next);
 
         int dist = 1;
         ArrayList<int[]> hold;
+        // Run flood fill to find the distance between all neighboring stations
         do {
             hold = (ArrayList<int[]>) next.clone();
             next.clear();
@@ -71,35 +91,11 @@ public class RoutesPresenter extends Application implements ICityBuilderPresente
 
         Graph cityMapGraph = cityMap.getDistances();
 
-
-        cityMap.getDistances().printDistances();
-        System.out.println();
-
+        // Run Floyd Warshall algorithm on the graph in order to find the distance between non-neighboring stations
         Graph allPathsGraph = cityMapGraph.floydWarshall();
-        //List<List<Integer>> routes = m.genRoutes(cityMap, allPathsGraph, Constants.LINES);
 
-//        List<List<int[]>> routesAndDistance = new ArrayList<>(routes.size());
-//        for (int i = 0; i < routes.size(); i++) {
-//            List<Integer> route = routes.get(i);
-//            int prevStation = route.get(0);
-//
-//            List<int[]> currentRoute = new ArrayList<>(route.size());
-//            for (int j = 0; j < route.size(); j++) {
-//                int currentStation = route.get(j);
-//                int distance = allPathsGraph.getDistance(prevStation, currentStation);
-//                currentRoute.add(new int[] {currentStation, distance});
-//                prevStation = currentStation;
-//            }
-//            routesAndDistance.add(currentRoute);
-//            System.out.print("Line " + (i+1) + ": ");
-//            System.out.println(routes.get(i));
-//        }
-        // allPathsGraph.printDistances();;
+        // Run the Clarke and Wright savings algorithm with the depot from the Floyd Warshall graph
         List<Path> lines = allPathsGraph.clarkeAndWright(allPathsGraph.findMinNode());
-        for(int i = 0; i < lines.size(); i++) {
-            System.out.println("line " + i + ": " + lines.get(i));
-        }
-
 
         routesView.setRoutes(lines);
         routesView.show(new Stage());

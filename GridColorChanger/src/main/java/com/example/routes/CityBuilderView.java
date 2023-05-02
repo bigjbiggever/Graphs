@@ -58,19 +58,36 @@ public class CityBuilderView implements ICityBuilderView {
         }
     }
 
+    /***
+     *  Empty generator
+     */
     public CityBuilderView () {}
 
+    /***
+     * CityBuilderView generator
+     * @param presenter
+     */
     public CityBuilderView(ICityBuilderPresenter presenter) {
         super();
         this.presenter = presenter;
     }
 
-
+    /**
+     * Cell setter
+     * @param row the cell's row
+     * @param col the cell's column
+     * @param type the cell's type
+     */
     @Override
     public void setCell(int row, int col, CellType type) {
         cells[row][col].setFill(type.getColor());
     }
 
+    /***
+     * Initializes the city
+     * @param stage
+     * @param map the map on which we base the city
+     */
     public void init(Stage stage, int[][] map) {
         this.stage = stage;
 
@@ -107,6 +124,10 @@ public class CityBuilderView implements ICityBuilderView {
         }
     }
 
+    /***
+     * Numbers the stations in the view
+     * @param stations station matrix
+     */
     public void numberStations(ArrayList<int[]> stations) {
         gridPane.getChildren().removeIf(n -> n instanceof Text);
 
@@ -123,6 +144,9 @@ public class CityBuilderView implements ICityBuilderView {
         }
     }
 
+    /***
+     * Show the view
+     */
     @Override
     public void show() {
         // Create the choice box for selecting the cell type

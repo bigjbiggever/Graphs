@@ -6,30 +6,61 @@ import java.util.stream.Collectors;
 public class Graph {
     private int[][] distanceMatrix;
 
+    /***
+     * Graph generator
+     * @param nodes the amount of nodes
+     */
     public Graph(int nodes) {
         this.distanceMatrix = new int[nodes][nodes];
     }
 
+    /***
+     * Graph generator with distance matrix
+     * @param distanceMatrix
+     */
     public Graph(int[][] distanceMatrix) {
         this.distanceMatrix = distanceMatrix;
     }
 
+    /***
+     * Graph generator using another graph
+     * @param g the graph
+     */
     public Graph(Graph g) {
         this.distanceMatrix = g.getDistanceMatrix();
     }
 
+    /***
+     * Adds a node to the graph
+     */
     public void addNode() {
         int[][] temp = new int[distanceMatrix.length + 1][distanceMatrix[0].length + 1];
     }
 
+    /***
+     * Gets the distance between two nodes
+     * @param node1 first node
+     * @param node2 second node
+     * @return the distance
+     */
     public int getDistance(int node1, int node2) {
         return distanceMatrix[node1][node2];
     }
 
+    /***
+     * Distance matrix getter
+     * @return distance matrix clone
+     */
     public int[][] getDistanceMatrix(){
         return this.distanceMatrix.clone();
     }
 
+    /***
+     * Distance setter
+     * @param node1 first node
+     * @param node2 second node
+     * @param distance distance
+     */
     public void setDistance(int node1, int node2, int distance) {
         if (distanceMatrix[node1][node2] > distance) {
             distanceMatrix[node1][node2] = distance;
@@ -37,6 +68,11 @@ public class Graph {
         }
     }
 
+    /***
+     * Initializes distance matrix.
+     * Distance is set as infinity between all nodes except for
+     * a vertex connecting a node to itself
+     */
     public void init() {
         for (int i = 0; i < distanceMatrix.length; i++) {
             for (int j = 0; j < distanceMatrix[0].length; j++) {
@@ -46,6 +82,9 @@ public class Graph {
         }
     }
 
+    /***
+     * Prints the distance matrix
+     */
     public void printDistances() {
         for (int i = 0; i < this.distanceMatrix.length; i++) {
             for (int j = 0; j < this.distanceMatrix[0].length; j++) {
@@ -65,13 +104,19 @@ public class Graph {
 
     public void addPath(Station s, int distance, HashMap<Station, Integer> distances) {
         for (Map.Entry<Station, Integer> target: distances.entrySet()) {
-            if (distanceMatrix[s.getID()][target.getKey().getID()] > distance + target.getValue()) {
+            if (distanceMatrix[s.getID()][target.getKey().getID()] > distance + target.getValue())
                add(s, target.getKey(), distance + target.getValue());
-            }
         }
     }
 
     // O(v^3)
+
+    /***
+     * Adds to the graph all of the vertices which aren't directly connected
+     * <p>
+     * The time complexity of this function is O(n^3)
+     * @return returns a new graph
+     */
     public Graph floydWarshall() {
         int[][] distances = new int [this.distanceMatrix.length][this.distanceMatrix.length];
 
@@ -95,7 +140,11 @@ public class Graph {
         return new Graph(distances);
     }
 
-    // returns the id of the node with the lowest sum of distances
+    /***
+     * Finds the depot AKA the station closest on average to all
+     * other stations.
+     * @return ID of the station closest to all other stations
+     */
     public int findMinNode() {
         int min = Integer.MAX_VALUE, minIdx = 0, sum;
         for (int i = 0; i < this.distanceMatrix.length; i++) {
@@ -111,6 +160,11 @@ public class Graph {
         return minIdx;
     }
 
+    /***
+     * Finds the bus routes using the Clarke and Wright Savings algorithm
+     * @param depot the depot used in the algorithm
+     * @return the bus routes
+     */
     public List<Path> clarkeAndWright(int depot) {
         List<Path> routes = new ArrayList<>();
         // Connect every station to the depot directly
@@ -125,7 +179,6 @@ public class Graph {
 
                 path = new Path(currLine);
                 routes.add(path);
-                System.out.println("path" + i + ": " + path.toString());
             }
         }
         // Create every pair and find the ones with the highest savings
@@ -142,7 +195,6 @@ public class Graph {
                     if (currPath != null) {
                         int saved = (routes.get(i).getLength() + routes.get(j).getLength()) - currPath.getLength();
                         if (maxSavingsPath == null && saved > 0 || saved > maxSaved) {
-                            System.out.println("current Path: " + currPath + " saved: " + saved);
                             maxSavingsPath = currPath;
                             maxSaved = saved;
                             secondPathIndex = j;
@@ -151,7 +203,6 @@ public class Graph {
                 }
             }
             if(maxSavingsPath != null) {
-                System.out.println("max saving" + maxSavingsPath + " saved " + maxSaved);
                 routes.set(firstPathIndex, maxSavingsPath);
                 //routes.remove(secondPathIndex);
                 routes.set(secondPathIndex, null);
@@ -161,6 +212,14 @@ public class Graph {
         return (List<Path>) routes.stream().filter((Path path) -> path != null).collect(Collectors.toList());
     }
 
+    /***
+     * Calculates the savings using a new path
+     * @param routes list of routes
+     * @param route1 first route
+     * @param route2 second route
+     * @param depot  the depot
+     * @return new, shorter path
+     */
     public Path calcSavings(List<Path> routes, int route1, int route2, int depot) {
         Path retPath;
         Path path1 = routes.get(route1);
@@ -189,10 +248,6 @@ public class Graph {
             return null;
         }
 
-//        System.out.println("\n" + end1.getStationB() + "->" + end2.getStationB() + " distance: " + distanceBetweenEnds);
-//        System.out.println(end1.getStationB() + "->" + start2.getStationB() + " distance: " + distanceBetweenStart2AndEnd1);
-//        System.out.println(end2.getStationB() + "-> " + start1.getStationB() + " distance: " + distanceBetweenStart1AndEnd2);
-
         // If the routes connection starts from route1
 
         if (distanceBetweenEnds <= Math.min(distanceBetweenStart2AndEnd1, distanceBetweenStart1AndEnd2)) {
@@ -207,17 +262,17 @@ public class Graph {
             }
              retPath = new Path(firstPath);
              retPath.connectLines(secondPath.reverse(), distanceBetweenEnds, depot);
-            System.out.println("end->end");
+
         } else if (distanceBetweenStart2AndEnd1 < distanceBetweenStart1AndEnd2) {
             // start with path 1 and connect path 2 without depot
             retPath = new Path(path1);
             retPath.connectLines(path2, distanceBetweenStart2AndEnd1, depot);
-            System.out.println("end1->start2 p1:" + path1 + "p2: " + path2);
+
         } else {
             // start with path 2 and connect path 1 without depot
             retPath = new Path(path2);
             retPath.connectLines(path1, distanceBetweenStart1AndEnd2, depot);
-            System.out.println("end2->start1 p1:" + path1 + "p2: " + path2);
+
         }
 
         return retPath;
