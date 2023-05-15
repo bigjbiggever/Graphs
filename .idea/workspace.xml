@@ -4,20 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c385d546-bb04-4ab5-a8fc-e1a917db3889" name="Changes" comment="">
+    <list default="true" id="c385d546-bb04-4ab5-a8fc-e1a917db3889" name="Changes" comment="Added Comments, removed unused, cosmetic changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/Cell.java" beforeDir="false" afterPath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/Cell.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/CityBuilderView.java" beforeDir="false" afterPath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/CityBuilderView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/CityMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/CityMap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/Constants.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/Graph.java" beforeDir="false" afterPath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/Graph.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/Path.java" beforeDir="false" afterPath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/Path.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/Presenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/Presenter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/RoutesModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/RoutesModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/RoutesPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/RoutesPresenter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/RoutesView.java" beforeDir="false" afterPath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/RoutesView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/Station.java" beforeDir="false" afterPath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/Station.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/StationsPair.java" beforeDir="false" afterPath="$PROJECT_DIR$/GridColorChanger/src/main/java/com/example/routes/StationsPair.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,6 +85,14 @@
       <option name="presentableId" value="Default" />
       <updated>1678012003817</updated>
     </task>
+    <task id="LOCAL-00001" summary="Added Comments, removed unused, cosmetic changes">
+      <created>1683042719297</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1683042719297</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -108,6 +105,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added Comments, removed unused, cosmetic changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Comments, removed unused, cosmetic changes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

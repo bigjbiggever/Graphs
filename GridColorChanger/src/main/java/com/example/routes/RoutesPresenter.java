@@ -90,7 +90,6 @@ public class RoutesPresenter extends Application implements ICityBuilderPresente
         } while (next.size() > 0);
 
         Graph cityMapGraph = cityMap.getDistances();
-
         // Run Floyd Warshall algorithm on the graph in order to find the distance between non-neighboring stations
         Graph allPathsGraph = cityMapGraph.floydWarshall();
 
